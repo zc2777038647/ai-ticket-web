@@ -2,6 +2,8 @@
 
 一个用于 GitHub 展示、简历截图和面试演示的 Vue 3 工单管理 Demo。前端通过 Vite 代理只访问 Java Spring Boot 业务 API；Java 仍然是认证、授权、工单状态和数据一致性的可信边界，浏览器不会直连 Python AI 内部接口。
 
+这不是生产前端或第二套业务后端，而是一个独立的 AI Ticket Console：用于展示真实接口、角色差异、AI 辅助处理和 Python 故障隔离。
+
 ## 技术栈
 
 - Vue 3 + Composition API + TypeScript
@@ -64,6 +66,26 @@ npm run build
 ```
 
 当前 Demo 不包含前端数据库、用户系统或 Python 凭证，`.env`、`dist` 和 `node_modules` 不应提交。
+
+## 测试证据
+
+- Frontend：`npm run build` 已通过；构建包含 TypeScript 类型检查和 Vite production bundle。
+- Java Backend：`463 tests passed`。
+- Python AI Service：`12 passed`。
+
+这些数字来自三个仓库各自的验证命令，不代表 463 个前端或跨服务端到端测试。
+
+## Related Repositories
+
+- [Java Core Backend](https://github.com/zc2777038647/ai-ticket-platform)：可信业务边界，负责认证、授权、工单和 AI 入口。
+- [Python AI Service](https://github.com/zc2777038647/ai-ticket-ai-service)：内部 AI capability service，浏览器不直接访问。
+
+## Known Limitations
+
+- access token 使用 `localStorage` 仅用于本地 Demo；生产环境需要更严格的 Token 存储、XSS 和 CSRF 策略。
+- 当前 Java `TicketResponse` 未提供处理人和时间字段时，页面会明确显示“响应未提供”，不会伪造数据。
+- 当前没有 AGENT 列表 API，ADMIN 指派使用后端实际支持的 AGENT 用户 ID 输入。
+- 当前 AI 演示使用后端 fake provider；真实外部 LLM 凭证不写入仓库。
 
 ## 页面截图
 
